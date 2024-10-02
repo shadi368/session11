@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f9fc;
+        }
+
+        .main {
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            width: 400px;
+        }
+
+        .main h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .namec {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border: 1px solid #007bff;
+        }
+
+        .namec input {
+            width: 48%;
+        }
+
+        p {
+            color: red;
+            font-size: 12px;
+            margin: 5px 0;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .select-wrapper {
+            margin-top: 15px;
+        }
+
+        .select-wrapper select {
+            width: 100%;
+        }
+
+        @media (max-width: 500px) {
+            .namec {
+                flex-direction: column;
+            }
+
+            .namec input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h2>Form Validation</h2>
+        <div class="namec"> 
+            <div class="name">
+                <input type="text" placeholder="First Name" id="name">
+                <p id="nameError">Name must be between 4 and 16 characters</p>
+            </div> 
+            <div class="lname">
+                <input type="text" placeholder="Last Name" id="lastname">
+                <p id="lnameError">Last name must be between 3 and 10 characters</p>
+            </div>
+        </div>
+        <div>
+            <input type="text" placeholder="Email" id="email">
+            <p id="emailError">Invalid email format</p>
+        </div>
+
+        <div class="select-wrapper">
+            <select id="pet">
+                <option value="">Select your pet</option>
+                <option value="husky">Husky</option>
+                <option value="akita">Akita</option>
+                <option value="german sheperd">German Shepherd</option>
+                <option value="cat">Cat</option>
+            </select>
+            <p id="petError">Please select a pet</p>
+        </div>
+
+        <button onclick="validation()">Submit</button>
+    </div>
+
+    <script>
+        function validation() {
+            let valid = true;
+            valid &= validateName();
+            valid &= validateLastname();
+            valid &= validateEmail();
+            valid &= validatePet();
+            return valid;
+        }
+
+        function validateName() {
+            let name = document.getElementById("name").value;
+            if (name.length >= 4 && name.length <= 16) {
+                document.getElementById("nameError").style.display = 'none';
+                return true;
+            } else {
+                document.getElementById("nameError").style.display = 'block';
+                return false;
+            }
+        }
+
+        function validateLastname() {
+            let lastname = document.getElementById("lastname").value;
+            if (lastname.length >= 3 && lastname.length <= 10) {
+                document.getElementById("lnameError").style.display = 'none';
+                return true;
+            } else {
+                document.getElementById("lnameError").style.display = 'block';
+                return false;
+            }
+        }
+
+        function validateEmail() {
+            let email = document.getElementById("email").value;
+            let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (emailPattern.test(email)) {
+                document.getElementById("emailError").style.display = 'none';
+                return true;
+            } else {
+                document.getElementById("emailError").style.display = 'block';
+                return false;
+            }
+        }
+
+        function validatePet() {
+            let pet = document.getElementById("pet").value;
+            if (pet !== "") {
+                document.getElementById("petError").style.display = 'none';
+                return true;
+            } else {
+                document.getElementById("petError").style.display = 'block';
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
